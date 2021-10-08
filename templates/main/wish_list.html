@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+
+
+{% block body %}
+   <h1>Список желаний: {{ wishlist.title }}</h1>
+   <h2>я хочу чтобы мне подарили: </h2>
+   {% if is_owner_list %}
+       <form method="POST" action="">
+           {% csrf_token %}
+           {{ form.as_p }}
+           <button type="submit">Добавить желание</button>
+       </form>
+  
+   {% endif %}
+
+   {% for product in wishlist.product.all %}
+         <a href="{{ product.link }}"> {{ product.title }}</a><br>
+   {% endfor %}
+
+{% endblock %}

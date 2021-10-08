@@ -9,11 +9,12 @@ from .forms import ProductForm
 
 
 def index(request):
-    return render(request, "index.html", {})
+    wishlists = Wishlist.objects.all()
+    return render(request, "main/index.html", {'wishlists': wishlists})
 
 
 def about(request):
-    return render(request, "about.html", {"title": "wishlist i about project"})
+    return render(request, "main/about.html", {"title": "wishlist i about project"})
 
 
 def list_page(request, pk):
@@ -25,15 +26,17 @@ def list_page(request, pk):
         wishlist.product.add(instance_product)
         wishlist.save()
     else:
-         form = ProductForm()
-    return render(
-        request,
-        "wish_list.html",
-        {
+        form = ProductForm()
+    context =  {
             "wishlist": wishlist,
-            "is_owner_list": wishlist.owner == request.user
+            # "wishlist_products": whislist.product.all()
+            # "is_owner_list": wishlist.owner == request.user.username,
+            "is_owner_list": True,
+            "form": form
         }
-    )
+    return render(request,
+                  "main/wish_list.html",
+                  context)
 
 
 
