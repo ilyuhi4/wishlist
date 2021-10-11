@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 
+{% load crispy_forms_tags %}
 
 {% block body %}
    <h1>Список желаний: {{ wishlist.title }}</h1>
@@ -7,12 +8,12 @@
    {% if is_owner_list %}
        <form method="POST" action="">
            {% csrf_token %}
-           {{ form.as_p }}
+           {% crispy form %}
            <button type="submit">Добавить желание</button>
        </form>
   
    {% endif %}
-
+   <br>
    {% for product in wishlist.product.all %}
          <a href="{{ product.link }}"> {{ product.title }}</a><br>
    {% endfor %}

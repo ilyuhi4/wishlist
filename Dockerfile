@@ -10,22 +10,26 @@ ENV PYTHONUNBUFFERED 1
 #RUN apt update
 
 #Устанавливаем зависимости из requirements.txt
-RUN pip install django gunicorn
+#COPY . requirements.txt
+
 
 #Устанавливаем клиент CURL
 RUN apk add curl
 
 #Создаём директорию для проекта
 RUN mkdir /wishlist
-RUN mkdir /home/app/web/static
+#RUN mkdir /home/app/web/static
 
 #назначем рабочей директорией
 WORKDIR /wishlist
+
+#CMD ['cat', 'requirements.txt']
+RUN pip install django gunicorn django-crispy-forms
 
 #копируем внутрь контейнера наши исходники
 
 #COPY . /wishlist
 
 #что делаем после запуска контейнера
-#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "collectstatic"]
 

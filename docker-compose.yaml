@@ -10,16 +10,13 @@ services:
       - 8000
     volumes:
       - .:/wishlist
-      - static_volume:/home/app/web/static
+      - ./static:/home/app/web/static
   
   nginx:
     build: ./nginx
-    volumes:
-      - static_volume:/home/app/web/static
     ports:
       - 1337:80
     depends_on:
       - web
-    
-volumes:
-    static_volume:
+    volumes:
+      - ./static:/home/app/web/static
